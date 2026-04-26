@@ -1040,7 +1040,7 @@ match.
 
 (defun regex-replace-all (regex target-string replacement &key
                                 (start 0)
-                                (end (length target-string))
+                                end
                                 preserve-case
                                 simple-calls
                                 (element-type #+:lispworks 'lw:simple-char #-:lispworks 'character))
@@ -1075,7 +1075,8 @@ match.
   ELEMENT-TYPE is the element type of the resulting string."
   (declare #.*standard-optimize-settings*)
   (let ((pos-list '())
-        (reg-list '()))
+        (reg-list '())
+        (end (or end (length target-string))))
     (do-scans (match-start match-end reg-starts reg-ends regex target-string
                            nil
                            :start start :end end)
